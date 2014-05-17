@@ -10,6 +10,16 @@ gem 'carrierwave', '0.9.0'
 gem 'rmagick', '2.13.2'
 gem 'kaminari'
 
+group :test, :development do 
+  gem 'pry-rails'
+  gem 'rspec-rails', '~>2.14'
+  gem 'debugger'
+  gem 'factory_girl_rails'
+end
+
+
+
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.2'
 
@@ -47,3 +57,5 @@ end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+

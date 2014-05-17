@@ -16,7 +16,6 @@ class GadgetsController < ApplicationController
 		@gadget = Gadget.new
 	end
 
-
 	def create
 		@gadget = Gadget.new(gadget_params)
 		@gadget.user_id = current_user.id
