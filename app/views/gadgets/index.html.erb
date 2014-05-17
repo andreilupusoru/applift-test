@@ -1,0 +1,28 @@
+<h1>Gadget index</h1>
+
+<%= link_to "Add gadget" , new_gadget_path, :class=>"btn btn-primary" %>
+<table class="table table-bordered"> 
+<thead>
+	<tr>
+		<th>Name</th>
+		<th>Description</th>
+		<th># images</th>
+		<th>Actions</th>
+	</tr>
+</thead>
+<tbody>
+<% @gadgets.each do |res| %>
+	<tr>
+		<td><%= res.name %></td>
+		<td><%= res.description %></td>
+		<td><%= %></td>
+		<td>
+			<%= link_to "View" , gadget_path(res) %>&nbsp;&nbsp;
+			<%= link_to "Edit" , edit_gadget_path(res) %>&nbsp;&nbsp;
+			<%= link_to "Delete" , res , :method=>:delete, :title=>"Delete", :confirm=>"Delete gadget: #{res.name}?" %>&nbsp;
+		</td>
+	</tr>
+<% end %>
+</tbody>
+</table>
+<%# paginate @gadgets %>
