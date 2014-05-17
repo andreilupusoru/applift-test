@@ -9,7 +9,7 @@ class GadgetsController < ApplicationController
 
 	def show
 		@gadget = current_user.gadgets.find_by_id(params[:id].to_i)
-		@upload = GadgetImage.new(:gadget_id=>@gadget_id)
+		@upload = GadgetImage.new
 	end
 
 	def new
@@ -49,10 +49,12 @@ class GadgetsController < ApplicationController
 
 	def upload
 		@gadget = current_user.gadgets.find_by_id(params[:id].to_i)
-		@upload = GadgetImage.new(params[:gadget_image].permit(:image))
-		if @upload.image.filename.nil?
+		if params[:gadget_image].blank?
 			flash[:notice] = "Please select a file"
+			@upload = GadgetImage.new
 		else
+			@upload = GadgetImage.new(params[:gadget_image].permit(:image))
+			@upload.gadget_id = @gadget.id
 			if @upload.save
 				flash[:notice] = "Successfully uploaded"
 			else

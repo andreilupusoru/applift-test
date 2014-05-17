@@ -21,7 +21,11 @@
 	<tr>
 		<td><%= res.name %></td>
 		<td><%= res.description %></td>
-		<td><%= res.gadget_images.size %></td>
+		<td>
+			<% res.gadget_images.each do |img| %>
+			<%= link_to( image_tag(img.image.thumb,:width=>"50px;"), img.image.standard.url ) %>
+			<% end %>
+		</td>
 		<td>
 			<%= link_to "View" , gadget_path(res) %>&nbsp;&nbsp;
 			<%= link_to "Edit" , edit_gadget_path(res) %>&nbsp;&nbsp;

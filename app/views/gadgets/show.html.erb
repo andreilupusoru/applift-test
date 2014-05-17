@@ -2,9 +2,7 @@
 <p><%= @gadget.description %></p>
 <h2>Images</h2>
 <% @gadget.gadget_images.each do |res| %>
-	<div style="inline-block">
-		<%= link_to( image_tag(res.image.thumb,:width=>"50px;"), res.image.standard.url ) %>
-	</div>
+		<%= link_to( image_tag(res.image.medium), res.image.standard.url ) %>
 <% end %> 
 
 <%= form_for @upload, :url=>"/gadgets/upload/#{@gadget.id}" do |f|%>

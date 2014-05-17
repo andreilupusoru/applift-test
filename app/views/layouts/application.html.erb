@@ -8,12 +8,13 @@
 </head>
 <body>
 <% if current_user %>
-<div><%= link_to "Logout", destroy_user_session_path, method: "delete" %></div>
-
+	<div><%= link_to "Logout", destroy_user_session_path, method: "delete" %></div>
 <% end %>
+
 <% if !flash[:notice].blank? %>
-<%= flash[:notice] %>
-	<% end %>
+		<div style="color:red;font-size:22px;"><%= flash[:notice] %></div>
+<% end %>
+
 <%= yield %>
 
 </body>
