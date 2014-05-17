@@ -1,6 +1,7 @@
 class GadgetsController < ApplicationController
 
 	before_filter :authenticate_user!
+	before_action :get_gadget, only: [:show, :edit, :update, :destroy, :upload]
 
 	def index
 		search = "%"+params[:search].to_s+"%"
@@ -8,7 +9,6 @@ class GadgetsController < ApplicationController
 	end
 
 	def show
-		@gadget = current_user.gadgets.find_by_id(params[:id].to_i)
 		@upload = GadgetImage.new
 	end
 
@@ -18,7 +18,7 @@ class GadgetsController < ApplicationController
 
 
 	def create
-		@gadget = Gadget.new(params[:gadget].permit(:name, :description))
+		@gadget = Gadget.new(gadget_params)
 		@gadget.user_id = current_user.id
 		if @gadget.save
 			redirect_to @gadget
@@ -28,12 +28,10 @@ class GadgetsController < ApplicationController
 	end
 
 	def edit
-		@gadget = current_user.gadgets.find_by_id(params[:id].to_i)
 	end
 
 	def update
-		@gadget = current_user.gadgets.find_by_id(params[:id].to_i)
-		if @gadget.update_attributes(params[:gadget].permit(:name, :description))
+		if @gadget.update_attributes(gadget_params)
 			redirect_to @gadget
 		else
 			render edit_gadget_path(@gadget)
@@ -42,13 +40,11 @@ class GadgetsController < ApplicationController
 
 
 	def destroy
-		@gadget = current_user.gadgets.find_by_id(params[:id].to_i)
 		@gadget.destroy if !@gadget.nil?
 		redirect_to :index
 	end
 
 	def upload
-		@gadget = current_user.gadgets.find_by_id(params[:id].to_i)
 		if params[:gadget_image].blank?
 			flash[:notice] = "Please select a file"
 			@upload = GadgetImage.new
@@ -62,6 +58,16 @@ class GadgetsController < ApplicationController
 			end
 		end
 		render :show
+	end
+
+
+private
+	def gadget_params
+		params.require(:gadget).permin(:name,:description)
+	end
+
+	def get_gadget
+		@gadget = current_user.gadgets.find_by_id(params[:id].to_i)
 	end
 
 
