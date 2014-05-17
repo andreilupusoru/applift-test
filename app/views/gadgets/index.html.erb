@@ -1,5 +1,11 @@
 <h1>Gadget index</h1>
 
+<%= form_tag "/gadgets/index" do %>
+<input type="text" placeholder="name, description" name="search" value="<%= params[:search] %>">&nbsp;
+<input type="submit" class="btn btn-primary" value="Search">
+<% end %>
+
+
 <%= link_to "Add gadget" , new_gadget_path, :class=>"btn btn-primary" %>
 <table class="table table-bordered"> 
 <thead>
@@ -15,7 +21,7 @@
 	<tr>
 		<td><%= res.name %></td>
 		<td><%= res.description %></td>
-		<td><%= %></td>
+		<td><%= res.gadget_images.size %></td>
 		<td>
 			<%= link_to "View" , gadget_path(res) %>&nbsp;&nbsp;
 			<%= link_to "Edit" , edit_gadget_path(res) %>&nbsp;&nbsp;

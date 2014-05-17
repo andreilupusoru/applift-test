@@ -3,7 +3,7 @@
 class AppliftUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or MiniMagick support:
-  # include CarrierWave::RMagick
+  include CarrierWave::RMagick
   # include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
@@ -33,16 +33,15 @@ class AppliftUploader < CarrierWave::Uploader::Base
 
   # Create different versions of your uploaded files:
   version :thumb do
-    process :scale => [50, 50]
+    process :resize_to_fit => [50, 50]
   end
 
   version :medium do
-    process :scale => [200, 200]
+    process :resize_to_fit => [200, 200]
   end
 
-
   version :standard do
-    process :scale => [500, 500]
+    process :resize_to_fit => [500, 500]
   end
 
 

@@ -9,6 +9,7 @@ class GadgetsController < ApplicationController
 
 	def show
 		@gadget = current_user.gadgets.find_by_id(params[:id].to_i)
+		@upload = GadgetImage.new(:gadget_id=>@gadget_id)
 	end
 
 	def new
@@ -22,7 +23,7 @@ class GadgetsController < ApplicationController
 		if @gadget.save
 			redirect_to @gadget
 		else
-			render :new
+			render new_gadget_path
 		end
 	end
 
@@ -35,7 +36,7 @@ class GadgetsController < ApplicationController
 		if @gadget.update_attributes(params[:gadget].permit(:name, :description))
 			redirect_to @gadget
 		else
-			render :edit
+			render edit_gadget_path(@gadget)
 		end
 	end
 
@@ -44,6 +45,21 @@ class GadgetsController < ApplicationController
 		@gadget = current_user.gadgets.find_by_id(params[:id].to_i)
 		@gadget.destroy if !@gadget.nil?
 		redirect_to :index
+	end
+
+	def upload
+		@gadget = current_user.gadgets.find_by_id(params[:id].to_i)
+		@upload = GadgetImage.new(params[:gadget_image].permit(:image))
+		if @upload.image.filename.nil?
+			flash[:notice] = "Please select a file"
+		else
+			if @upload.save
+				flash[:notice] = "Successfully uploaded"
+			else
+				flash[:notice] = "Error on upload"
+			end
+		end
+		render :show
 	end
 
 

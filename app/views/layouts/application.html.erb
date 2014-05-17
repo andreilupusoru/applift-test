@@ -11,6 +11,9 @@
 <div><%= link_to "Logout", destroy_user_session_path, method: "delete" %></div>
 
 <% end %>
+<% if !flash[:notice].blank? %>
+<%= flash[:notice] %>
+	<% end %>
 <%= yield %>
 
 </body>
