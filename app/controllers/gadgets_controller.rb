@@ -41,7 +41,7 @@ class GadgetsController < ApplicationController
 
 	def destroy
 		@gadget.destroy if !@gadget.nil?
-		redirect_to :index
+		redirect_to gadgets_path
 	end
 
 	def upload
@@ -63,7 +63,7 @@ class GadgetsController < ApplicationController
 
 private
 	def gadget_params
-		params.require(:gadget).permin(:name,:description)
+		params.require(:gadget).permit(:name,:description)
 	end
 
 	def get_gadget
